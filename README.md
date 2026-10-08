@@ -1,4 +1,5 @@
 # π-Causal Sandbox
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23237590.svg)](https://doi.org/10.5281/zenodo.23237590)
 
 **A reproducible wind tunnel for active causal inference.**
 
