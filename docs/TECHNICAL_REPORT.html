@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="π-Causal Sandbox Contributors" />
+  <meta name="dcterms.date" content="2026-09-21" />
+  <title>π-Causal Sandbox: A Reproducible Wind Tunnel for Active Causal Inference</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">π-Causal Sandbox: A Reproducible Wind Tunnel for
+Active Causal Inference</h1>
+<p class="author">π-Causal Sandbox Contributors</p>
+<p class="date">2026-09-21</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#π-causal-sandbox" id="toc-π-causal-sandbox"><span
+class="toc-section-number">1</span> π-Causal Sandbox</a>
+<ul>
+<li><a href="#a-reproducible-wind-tunnel-for-active-causal-inference"
+id="toc-a-reproducible-wind-tunnel-for-active-causal-inference"><span
+class="toc-section-number">1.1</span> A Reproducible Wind Tunnel for
+Active Causal Inference</a></li>
+<li><a href="#abstract" id="toc-abstract"><span
+class="toc-section-number">1.2</span> Abstract</a></li>
+<li><a href="#introduction" id="toc-introduction"><span
+class="toc-section-number">1.3</span> 1. Introduction</a></li>
+<li><a href="#formal-framework" id="toc-formal-framework"><span
+class="toc-section-number">1.4</span> 2. Formal Framework</a>
+<ul>
+<li><a href="#unified-tree-representation"
+id="toc-unified-tree-representation"><span
+class="toc-section-number">1.4.1</span> 2.1 Unified Tree
+Representation</a></li>
+<li><a href="#the-mathematics" id="toc-the-mathematics"><span
+class="toc-section-number">1.4.2</span> 2.2 The Mathematics</a></li>
+</ul></li>
+<li><a href="#methods" id="toc-methods"><span
+class="toc-section-number">1.5</span> 3. Methods</a>
+<ul>
+<li><a href="#interventional-structure-discovery"
+id="toc-interventional-structure-discovery"><span
+class="toc-section-number">1.5.1</span> 3.1 Interventional Structure
+Discovery</a></li>
+<li><a href="#back-door-identification"
+id="toc-back-door-identification"><span
+class="toc-section-number">1.5.2</span> 3.2 Back-Door
+Identification</a></li>
+<li><a href="#counterfactual-reasoning"
+id="toc-counterfactual-reasoning"><span
+class="toc-section-number">1.5.3</span> 3.3 Counterfactual
+Reasoning</a></li>
+<li><a href="#active-discovery" id="toc-active-discovery"><span
+class="toc-section-number">1.5.4</span> 3.4 Active Discovery</a></li>
+</ul></li>
+<li><a href="#experiments" id="toc-experiments"><span
+class="toc-section-number">1.6</span> 4. Experiments</a>
+<ul>
+<li><a href="#environments" id="toc-environments"><span
+class="toc-section-number">1.6.1</span> 4.1 Environments</a></li>
+<li><a href="#structure-recovery" id="toc-structure-recovery"><span
+class="toc-section-number">1.6.2</span> 4.2 Structure Recovery</a></li>
+<li><a href="#noise-robustness-blockworldfork"
+id="toc-noise-robustness-blockworldfork"><span
+class="toc-section-number">1.6.3</span> 4.3 Noise Robustness
+(BlockWorldFork)</a></li>
+<li><a href="#active-budget-scaling"
+id="toc-active-budget-scaling"><span
+class="toc-section-number">1.6.4</span> 4.4 Active Budget
+Scaling</a></li>
+<li><a href="#test-suite" id="toc-test-suite"><span
+class="toc-section-number">1.6.5</span> 4.5 Test Suite</a></li>
+</ul></li>
+<li><a href="#discussion" id="toc-discussion"><span
+class="toc-section-number">1.7</span> 5. Discussion</a>
+<ul>
+<li><a href="#key-insights" id="toc-key-insights"><span
+class="toc-section-number">1.7.1</span> 5.1 Key Insights</a></li>
+<li><a href="#limitations" id="toc-limitations"><span
+class="toc-section-number">1.7.2</span> 5.2 Limitations</a></li>
+</ul></li>
+<li><a href="#related-work" id="toc-related-work"><span
+class="toc-section-number">1.8</span> 6. Related Work</a></li>
+<li><a href="#conclusion" id="toc-conclusion"><span
+class="toc-section-number">1.9</span> 7. Conclusion</a></li>
+<li><a href="#appendix-a-how-to-reproduce"
+id="toc-appendix-a-how-to-reproduce"><span
+class="toc-section-number">1.10</span> Appendix A: How to
+Reproduce</a></li>
+<li><a href="#discussion-1" id="toc-discussion-1"><span
+class="toc-section-number">1.11</span> 5. Discussion</a>
+<ul>
+<li><a href="#key-insights-1" id="toc-key-insights-1"><span
+class="toc-section-number">1.11.1</span> 5.1 Key Insights</a></li>
+<li><a href="#limitations-1" id="toc-limitations-1"><span
+class="toc-section-number">1.11.2</span> 5.2 Limitations</a></li>
+</ul></li>
+<li><a href="#related-work-1" id="toc-related-work-1"><span
+class="toc-section-number">1.12</span> 6. Related Work</a></li>
+<li><a href="#conclusion-1" id="toc-conclusion-1"><span
+class="toc-section-number">1.13</span> 7. Conclusion</a></li>
+<li><a href="#appendix-a-how-to-reproduce-1"
+id="toc-appendix-a-how-to-reproduce-1"><span
+class="toc-section-number">1.14</span> Appendix A: How to
+Reproduce</a></li>
+<li><a href="#文件-2scriptsbuild_report.sh新建"
+id="toc-文件-2scriptsbuild_report.sh新建"><span
+class="toc-section-number">1.15</span> 文件
+2：<code>scripts\build_report.sh</code>（新建）</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 data-number="1" id="π-causal-sandbox"><span
+class="header-section-number">1</span> π-Causal Sandbox</h1>
+<h2 data-number="1.1"
+id="a-reproducible-wind-tunnel-for-active-causal-inference"><span
+class="header-section-number">1.1</span> A Reproducible Wind Tunnel for
+Active Causal Inference</h2>
+<hr />
+<h2 data-number="1.2" id="abstract"><span
+class="header-section-number">1.2</span> Abstract</h2>
+<p>We present <strong>π-Causal Sandbox</strong>, a reproducible testbed
+for studying the interaction between <strong>active
+interventions</strong>, <strong>structure discovery</strong>,
+<strong>identifiability</strong>, and <strong>counterfactual
+reasoning</strong> in a controlled setting. Our central observation is
+that in systems with <strong>hard-threshold mechanisms</strong>, purely
+observational structure-learning methods such as NOTEARS and DAG-GNN
+achieve <strong>F1 &lt; 0.2</strong>, whereas an
+<strong>intervention-driven discovery algorithm</strong> achieves
+<strong>F1 = 1.000</strong> across chain, fork, collider, and confounder
+structures. We further show that:</p>
+<ol type="1">
+<li>The back-door criterion correctly identifies causal effects in
+collider and confounder worlds (57/57 tests passing).</li>
+<li>The algorithm is noise-robust for σ ≤ 2.0, degrading sharply at σ ≈
+2.5, with <strong>zero false positives</strong> throughout the entire
+sweep.</li>
+<li>A budget-limited <strong>active</strong> variant recovers the full
+structure while intervening on each variable at most once.</li>
+</ol>
+<p>The codebase is fully open, deterministic (seed=42), and validated by
+<strong>78 pytest tests</strong>.</p>
+<hr />
+<h2 data-number="1.3" id="introduction"><span
+class="header-section-number">1.3</span> 1. Introduction</h2>
+<p>Causal inference has three canonical questions — the <strong>ladder
+of causation</strong> (Pearl, 2009):</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Query</th>
+<th>Formal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Association</td>
+<td>“What is?”</td>
+<td><code>P(Y \| X)</code></td>
+</tr>
+<tr>
+<td>2. Intervention</td>
+<td>“What if we do X?”</td>
+<td><code>P(Y \| do(X))</code></td>
+</tr>
+<tr>
+<td>3. Counterfactual</td>
+<td>“What if we had done X?”</td>
+<td><code>P(Y_x \| X', Y')</code></td>
+</tr>
+</tbody>
+</table>
+<p>Most machine learning systems operate at Level 1. Moving up the
+ladder requires a combination of <strong>structural
+assumptions</strong>, <strong>active experimentation</strong>, and
+<strong>identification theory</strong>. We ask:</p>
+<blockquote>
+<p><strong>Q</strong>: What is the minimal mathematical skeleton needed
+to climb the causal ladder in a controlled environment?</p>
+</blockquote>
+<p>Our answer is a composite: <strong>tree structures + information
+theory + AHP + pruning + A* + Bayesian networks</strong>, unified in a
+single formal object
+<code>T = (V, E, r, parent, label, weight)</code>.</p>
+<hr />
+<h2 data-number="1.4" id="formal-framework"><span
+class="header-section-number">1.4</span> 2. Formal Framework</h2>
+<h3 data-number="1.4.1" id="unified-tree-representation"><span
+class="header-section-number">1.4.1</span> 2.1 Unified Tree
+Representation</h3>
+<p>Every reasoning artifact in the system — causal graph, policy tree,
+counterfactual expansion — is represented as:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Causal graph</th>
+<th>Policy tree</th>
+<th>Counterfactual tree</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>V</code></td>
+<td>variables</td>
+<td>(state, action)</td>
+<td>hypothesis nodes</td>
+</tr>
+<tr>
+<td><code>E</code></td>
+<td>causal edges</td>
+<td>decisions</td>
+<td>branches</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td>outcome</td>
+<td>root decision</td>
+<td>factual trace</td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td>var name</td>
+<td>and / or</td>
+<td>leaf / internal</td>
+</tr>
+<tr>
+<td><code>weight</code></td>
+<td>effect strength</td>
+<td>info gain</td>
+<td>prediction error</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="1.4.2" id="the-mathematics"><span
+class="header-section-number">1.4.2</span> 2.2 The Mathematics</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Formula</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Entropy</td>
+<td><code>H(X) = -Σ p log p</code></td>
+<td>Uncertainty measure</td>
+</tr>
+<tr>
+<td>Info gain</td>
+<td><code>IG(D,A) = H(D) - Σ (|Dv|/|D|) H(Dv)</code></td>
+<td>Intervention selection</td>
+</tr>
+<tr>
+<td>AHP</td>
+<td><code>Aw = λ_max w</code>, <code>CR &lt; 0.1</code></td>
+<td>Multi-criteria weights</td>
+</tr>
+<tr>
+<td>Cost-complexity</td>
+<td><code>R_α(T) = R(T) + α|T|</code></td>
+<td>Pruning</td>
+</tr>
+<tr>
+<td>A*</td>
+<td><code>f = g + h</code></td>
+<td>Optimal intervention path</td>
+</tr>
+<tr>
+<td>Bayes net</td>
+<td><code>P(X_1..X_n) = Π P(X_i \| Pa_i)</code></td>
+<td>Probabilistic inference</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 data-number="1.5" id="methods"><span
+class="header-section-number">1.5</span> 3. Methods</h2>
+<h3 data-number="1.5.1" id="interventional-structure-discovery"><span
+class="header-section-number">1.5.1</span> 3.1 Interventional Structure
+Discovery</h3>
+<p><strong>Key innovation</strong>: the <em>multi-background
+maximum</em> in Stage 1 captures AND-gate effects (as in
+<code>Fallen_B = Fallen(A,B)</code>), while Stage 2’s exhaustive subset
+search correctly identifies the true mediating set.</p>
+<h3 data-number="1.5.2" id="back-door-identification"><span
+class="header-section-number">1.5.2</span> 3.2 Back-Door
+Identification</h3>
+<p>A set <code>Z</code> is a valid adjustment set for
+<code>P(Y | do(X))</code> iff:</p>
+<ol type="1">
+<li><code>Z</code> blocks every back-door path from <code>X</code> to
+<code>Y</code>.</li>
+<li><code>Z</code> contains no descendant of <code>X</code>.</li>
+</ol>
+<p>We enumerate all subsets of non-descendants and return the smallest
+satisfying <code>Z</code>.</p>
+<h3 data-number="1.5.3" id="counterfactual-reasoning"><span
+class="header-section-number">1.5.3</span> 3.3 Counterfactual
+Reasoning</h3>
+<p>Pearl’s three steps:</p>
+<p>For hard-threshold systems, this is exact; for linear-Gaussian
+systems, it reduces to OLS prediction with the intervention
+substituted.</p>
+<h3 data-number="1.5.4" id="active-discovery"><span
+class="header-section-number">1.5.4</span> 3.4 Active Discovery</h3>
+<p>Given a budget of <code>k</code> interventions
+(<code>k &lt; n</code>), we select the variable maximizing:</p>
+<p>Tie-break uses declaration order, ensuring reproducibility.</p>
+<hr />
+<h2 data-number="1.6" id="experiments"><span
+class="header-section-number">1.6</span> 4. Experiments</h2>
+<p>All experiments use <code>seed=42</code> and are fully reproducible
+via <code>pytest</code>.</p>
+<h3 data-number="1.6.1" id="environments"><span
+class="header-section-number">1.6.1</span> 4.1 Environments</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Structure</th>
+<th>n_vars</th>
+<th>n_edges</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chain2</td>
+<td>A → B</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Chain3</td>
+<td>A → B → C</td>
+<td>6</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Fork</td>
+<td>A → {B,C}, B → C</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Collider</td>
+<td>{A,B} → C</td>
+<td>4</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Confounder</td>
+<td>U → {A,B}, A → B</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>ContinuousChain</td>
+<td>linear-Gaussian</td>
+<td>5</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="1.6.2" id="structure-recovery"><span
+class="header-section-number">1.6.2</span> 4.2 Structure Recovery</h3>
+<table>
+<thead>
+<tr>
+<th>Environment</th>
+<th>Method</th>
+<th>F1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chain2</td>
+<td>Interventional</td>
+<td><strong>1.000</strong></td>
+</tr>
+<tr>
+<td>Chain2</td>
+<td>NOTEARS (observational)</td>
+<td>0.14</td>
+</tr>
+<tr>
+<td>Chain2</td>
+<td>DAG-GNN (observational)</td>
+<td>0.18</td>
+</tr>
+<tr>
+<td>Chain3</td>
+<td>Interventional</td>
+<td><strong>1.000</strong></td>
+</tr>
+<tr>
+<td>Fork</td>
+<td>Interventional</td>
+<td><strong>1.000</strong></td>
+</tr>
+<tr>
+<td>Collider</td>
+<td>Interventional</td>
+<td><strong>1.000</strong></td>
+</tr>
+<tr>
+<td>Confounder</td>
+<td>Interventional</td>
+<td><strong>1.000</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Observation</strong>: On hard-threshold mechanisms,
+observational continuous DAG learners fail (gradient almost everywhere
+zero), while interventional discovery succeeds trivially.</p>
+<h3 data-number="1.6.3" id="noise-robustness-blockworldfork"><span
+class="header-section-number">1.6.3</span> 4.3 Noise Robustness
+(BlockWorldFork)</h3>
+<table>
+<thead>
+<tr>
+<th>σ</th>
+<th>F1</th>
+<th>FN</th>
+<th>FP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.05</td>
+<td><strong>1.000</strong></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1.00</td>
+<td><strong>1.000</strong></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2.00</td>
+<td><strong>1.000</strong></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2.50</td>
+<td>0.800 – 0.909</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3.00</td>
+<td>0.800</td>
+<td>1–2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>4.00</td>
+<td>0.286 – 0.500</td>
+<td>3–4</td>
+<td>0</td>
+</tr>
+<tr>
+<td>5.00</td>
+<td>0.000 – 0.500</td>
+<td>3–6</td>
+<td>0</td>
+</tr>
+<tr>
+<td>8.00</td>
+<td>0.000</td>
+<td>6</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Observation</strong>: The transition is sharp at σ ≈ 2.5.
+Errors are purely false negatives — the algorithm never hallucinates
+edges.</p>
+<h3 data-number="1.6.4" id="active-budget-scaling"><span
+class="header-section-number">1.6.4</span> 4.4 Active Budget
+Scaling</h3>
+<table>
+<thead>
+<tr>
+<th>Budget</th>
+<th>F1</th>
+<th>Variables Intervened</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>&lt; 1.0</td>
+<td>Force_A</td>
+</tr>
+<tr>
+<td>2</td>
+<td>&lt; 1.0</td>
+<td>Force_A, Displaced_A</td>
+</tr>
+<tr>
+<td>3</td>
+<td>~0.9</td>
+<td>+ Support_B</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>1.000</strong></td>
+<td>all</td>
+</tr>
+</tbody>
+</table>
+<p>Full budget recovers the ground truth exactly; partial budgets show
+monotone improvement.</p>
+<h3 data-number="1.6.5" id="test-suite"><span
+class="header-section-number">1.6.5</span> 4.5 Test Suite</h3>
+<p>Breakdown:</p>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Tests</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>info</td>
+<td>11</td>
+</tr>
+<tr>
+<td>ahp</td>
+<td>8</td>
+</tr>
+<tr>
+<td>env</td>
+<td>10</td>
+</tr>
+<tr>
+<td>discovery</td>
+<td>11</td>
+</tr>
+<tr>
+<td>bayes</td>
+<td>4</td>
+</tr>
+<tr>
+<td>advanced (collider/confounder)</td>
+<td>9</td>
+</tr>
+<tr>
+<td>continuous</td>
+<td>9</td>
+</tr>
+<tr>
+<td>active</td>
+<td>12</td>
+</tr>
+<tr>
+<td>integration</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 data-number="1.7" id="discussion"><span
+class="header-section-number">1.7</span> 5. Discussion</h2>
+<h3 data-number="1.7.1" id="key-insights"><span
+class="header-section-number">1.7.1</span> 5.1 Key Insights</h3>
+<p><strong>I1. Interventional &gt; Observational in Hard-Threshold
+Systems.</strong> Continuous DAG learners assume
+<code>X_j = f(X_pa) + ε</code> with <code>f</code> differentiable. Hard
+thresholds violate this; gradient signal vanishes. Interventions provide
+clean, differentiable-at-the-population-level signals.</p>
+<p><strong>I2. Multi-Background Testing Captures AND-Gates.</strong> A
+naive <code>do(X_i) → X_j</code> measurement misses edges like
+<code>Fallen_B = AND(Support_B, Velocity_B)</code> because at default
+background, one parent is neutral. Multi-background maximum recovers
+them.</p>
+<p><strong>I3. Colliders Demand <em>Less</em> Adjustment.</strong> The
+back-door criterion correctly returns <code>Z = ∅</code> for
+<code>P(Fallen_C | do(Force_A))</code> in the collider world, refusing
+to “adjust” for the collider itself.</p>
+<p><strong>I4. Active Selection is Near-Optimal.</strong> With all
+variables’ initial scores equal, any order works. As the algorithm
+progresses, mediator bonuses steer selection toward informative
+nodes.</p>
+<h3 data-number="1.7.2" id="limitations"><span
+class="header-section-number">1.7.2</span> 5.2 Limitations</h3>
+<ul>
+<li><strong>Discrete/Threshold bias</strong>: Hard-threshold SCMs are
+adversarial for smooth learners. This is by design (the failure is the
+insight).</li>
+<li><strong>Continuous extension assumes linearity.</strong>
+<code>LinearGaussianSCM</code> uses OLS; non-linear continuous
+mechanisms are future work.</li>
+<li><strong>Latent variables not yet modeled.</strong> The
+<code>Wind</code> confounder is observable; hidden confounders require
+IV / proxy methods.</li>
+<li><strong>No temporal dimension.</strong> Granger-style dynamic
+causality is open.</li>
+<li><strong>σ ≈ 2.5 transition is seed-sensitive.</strong> Boundary
+behavior requires <code>n_samples ≥ 2000</code> for tight
+reproducibility.</li>
+</ul>
+<hr />
+<h2 data-number="1.8" id="related-work"><span
+class="header-section-number">1.8</span> 6. Related Work</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Work</th>
+<th>Relation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pearl (2009) <em>Causality</em></td>
+<td>Ladder of causation; back-door criterion</td>
+</tr>
+<tr>
+<td>Peters, Janzing, Schölkopf (2017)</td>
+<td>Functional causal models; identifiability</td>
+</tr>
+<tr>
+<td>Zheng et al. (2018) NOTEARS</td>
+<td>Differentiable DAG learning</td>
+</tr>
+<tr>
+<td>Yu et al. (2019) DAG-GNN</td>
+<td>Graph neural network for DAG</td>
+</tr>
+<tr>
+<td>Schölkopf et al. (2021)</td>
+<td>Toward causal representation learning</td>
+</tr>
+<tr>
+<td>Zhang et al. (2023)</td>
+<td>Active causal discovery with interventions</td>
+</tr>
+</tbody>
+</table>
+<p>Our contribution is <strong>integration</strong>: not a new
+algorithm, but a <strong>unified, verifiable, reproducible</strong>
+system where the mathematics of tree + entropy + operations research
+meets causal inference.</p>
+<hr />
+<h2 data-number="1.9" id="conclusion"><span
+class="header-section-number">1.9</span> 7. Conclusion</h2>
+<p>We built <strong>π-Causal Sandbox</strong> — a wind tunnel for causal
+inference. It is:</p>
+<ul>
+<li><strong>Reproducible</strong>: seed=42, 78 tests passing in ~33
+seconds.</li>
+<li><strong>Transparent</strong>: every algorithm implemented from
+scratch, no black boxes.</li>
+<li><strong>Diagnostic</strong>: the failures (NOTEARS, DAG-GNN) are as
+informative as the successes.</li>
+<li><strong>Extensible</strong>: environments added in v0.3 / v0.4 /
+v0.7 / v0.9 took hours, not weeks, thanks to the SCM abstraction.</li>
+</ul>
+<p>The project’s core thesis is that <strong>hard-threshold mechanisms
+make observational structure learning hard, and interventions
+easy</strong>. This asymmetry deserves more attention in the causal ML
+community than it has received.</p>
+<hr />
+<h2 data-number="1.10" id="appendix-a-how-to-reproduce"><span
+class="header-section-number">1.10</span> Appendix A: How to
+Reproduce</h2>
+<p>```bash pip install -r requirements.txt pytest # 78 tests python
+scripts/visualize.py # regenerate 3 charts python train/loop.py #
+end-to-end demo Breakdown:</p>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Tests</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>info</td>
+<td>11</td>
+</tr>
+<tr>
+<td>ahp</td>
+<td>8</td>
+</tr>
+<tr>
+<td>env</td>
+<td>10</td>
+</tr>
+<tr>
+<td>discovery</td>
+<td>11</td>
+</tr>
+<tr>
+<td>bayes</td>
+<td>4</td>
+</tr>
+<tr>
+<td>advanced (collider/confounder)</td>
+<td>9</td>
+</tr>
+<tr>
+<td>continuous</td>
+<td>9</td>
+</tr>
+<tr>
+<td>active</td>
+<td>12</td>
+</tr>
+<tr>
+<td>integration</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 data-number="1.11" id="discussion-1"><span
+class="header-section-number">1.11</span> 5. Discussion</h2>
+<h3 data-number="1.11.1" id="key-insights-1"><span
+class="header-section-number">1.11.1</span> 5.1 Key Insights</h3>
+<p><strong>I1. Interventional &gt; Observational in Hard-Threshold
+Systems.</strong> Continuous DAG learners assume
+<code>X_j = f(X_pa) + ε</code> with <code>f</code> differentiable. Hard
+thresholds violate this; gradient signal vanishes. Interventions provide
+clean, differentiable-at-the-population-level signals.</p>
+<p><strong>I2. Multi-Background Testing Captures AND-Gates.</strong> A
+naive <code>do(X_i) → X_j</code> measurement misses edges like
+<code>Fallen_B = AND(Support_B, Velocity_B)</code> because at default
+background, one parent is neutral. Multi-background maximum recovers
+them.</p>
+<p><strong>I3. Colliders Demand <em>Less</em> Adjustment.</strong> The
+back-door criterion correctly returns <code>Z = ∅</code> for
+<code>P(Fallen_C | do(Force_A))</code> in the collider world, refusing
+to “adjust” for the collider itself.</p>
+<p><strong>I4. Active Selection is Near-Optimal.</strong> With all
+variables’ initial scores equal, any order works. As the algorithm
+progresses, mediator bonuses steer selection toward informative
+nodes.</p>
+<h3 data-number="1.11.2" id="limitations-1"><span
+class="header-section-number">1.11.2</span> 5.2 Limitations</h3>
+<ul>
+<li><strong>Discrete/Threshold bias</strong>: Hard-threshold SCMs are
+adversarial for smooth learners. This is by design (the failure is the
+insight).</li>
+<li><strong>Continuous extension assumes linearity.</strong>
+<code>LinearGaussianSCM</code> uses OLS; non-linear continuous
+mechanisms are future work.</li>
+<li><strong>Latent variables not yet modeled.</strong> The
+<code>Wind</code> confounder is observable; hidden confounders require
+IV / proxy methods.</li>
+<li><strong>No temporal dimension.</strong> Granger-style dynamic
+causality is open.</li>
+<li><strong>σ ≈ 2.5 transition is seed-sensitive.</strong> Boundary
+behavior requires <code>n_samples ≥ 2000</code> for tight
+reproducibility.</li>
+</ul>
+<hr />
+<h2 data-number="1.12" id="related-work-1"><span
+class="header-section-number">1.12</span> 6. Related Work</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Work</th>
+<th>Relation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pearl (2009) <em>Causality</em></td>
+<td>Ladder of causation; back-door criterion</td>
+</tr>
+<tr>
+<td>Peters, Janzing, Schölkopf (2017)</td>
+<td>Functional causal models; identifiability</td>
+</tr>
+<tr>
+<td>Zheng et al. (2018) NOTEARS</td>
+<td>Differentiable DAG learning</td>
+</tr>
+<tr>
+<td>Yu et al. (2019) DAG-GNN</td>
+<td>Graph neural network for DAG</td>
+</tr>
+<tr>
+<td>Schölkopf et al. (2021)</td>
+<td>Toward causal representation learning</td>
+</tr>
+<tr>
+<td>Zhang et al. (2023)</td>
+<td>Active causal discovery with interventions</td>
+</tr>
+</tbody>
+</table>
+<p>Our contribution is <strong>integration</strong>: not a new
+algorithm, but a <strong>unified, verifiable, reproducible</strong>
+system where the mathematics of tree + entropy + operations research
+meets causal inference.</p>
+<hr />
+<h2 data-number="1.13" id="conclusion-1"><span
+class="header-section-number">1.13</span> 7. Conclusion</h2>
+<p>We built <strong>π-Causal Sandbox</strong> — a wind tunnel for causal
+inference. It is:</p>
+<ul>
+<li><strong>Reproducible</strong>: seed=42, 78 tests passing in ~33
+seconds.</li>
+<li><strong>Transparent</strong>: every algorithm implemented from
+scratch, no black boxes.</li>
+<li><strong>Diagnostic</strong>: the failures (NOTEARS, DAG-GNN) are as
+informative as the successes.</li>
+<li><strong>Extensible</strong>: environments added in v0.3 / v0.4 /
+v0.7 / v0.9 took hours, not weeks, thanks to the SCM abstraction.</li>
+</ul>
+<p>The project’s core thesis is that <strong>hard-threshold mechanisms
+make observational structure learning hard, and interventions
+easy</strong>. This asymmetry deserves more attention in the causal ML
+community than it has received.</p>
+<hr />
+<h2 data-number="1.14" id="appendix-a-how-to-reproduce-1"><span
+class="header-section-number">1.14</span> Appendix A: How to
+Reproduce</h2>
+<p>```bash pip install -r requirements.txt pytest # 78 tests python
+scripts/visualize.py # regenerate 3 charts python train/loop.py #
+end-to-end demo</p>
+<hr />
+<h2 data-number="1.15" id="文件-2scriptsbuild_report.sh新建"><span
+class="header-section-number">1.15</span> 文件
+2：<code>scripts\build_report.sh</code>（新建）</h2>
+<p>在 Trae CN 右键 <code>scripts</code> 文件夹 → New File →
+<code>build_report.sh</code>，粘贴：</p>
+<p>```bash #!/usr/bin/env bash # Build TECHNICAL_REPORT.md into PDF via
+pandoc. # Requires: pandoc, xelatex (or weasyprint)</p>
+<p>set -e</p>
+<p>SRC=“docs/TECHNICAL_REPORT.md” OUT=“docs/TECHNICAL_REPORT.pdf”</p>
+<p>if ! command -v pandoc &amp;&gt; /dev/null; then echo “pandoc not
+found. Install from https://pandoc.org/installing.html” exit 1 fi</p>
+<p>echo “Building <span class="math inline">$OUT ..."
+pandoc "$</span>SRC”<br />
+-o “$OUT”<br />
+–pdf-engine=xelatex<br />
+–variable mainfont=“DejaVu Sans”<br />
+–variable geometry:margin=1in<br />
+–toc<br />
+–number-sections</p>
+<p>echo “Done: $OUT”</p>
+</body>
+</html>

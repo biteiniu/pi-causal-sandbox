@@ -1,0 +1,38 @@
+# ===== 专利敏感（必排除）=====
+xrd_final_report.py
+xrd_final_report.txt
+xrd_final_report.png
+docs/TECHNICAL_REPORT.md.bak
+
+# ===== 模型权重 =====
+mini_causal_llm/checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+
+# ===== 缓存 =====
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+.mypy_cache/
+
+# ===== 本地环境 =====
+env/
+.venv/
+venv/
+*.log
+
+# ===== IDE =====
+.vscode/
+.idea/
+*.swp
+
+# ===== 系统 =====
+Thumbs.db
+.DS_Store
+
+# ===== 临时脚本 =====
+fix_appendix.py
+fix_report.py
